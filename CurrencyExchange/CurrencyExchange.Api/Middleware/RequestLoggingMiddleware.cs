@@ -24,10 +24,7 @@ namespace CurrencyExchange.API.Middleware
             }
             finally
             {
-                if(context.Response.StatusCode.Equals(200))
-                {
-                    await _logger.LogAsync(RequestType.ApiRequest, context.Request?.Path.Value, context.Request?.Method, context.Response?.StatusCode, DateTime.Now);
-                }         
+                await _logger.LogAsync(RequestType.ApiRequest, context.Request?.Path.Value, context.Request?.Method, context.Response?.StatusCode, DateTime.Now);
             }
         }
     }

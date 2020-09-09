@@ -18,6 +18,10 @@ namespace CurrencyExchange.Controllers
         public async Task<IActionResult> Get(int amount, string from, string to)
         {
             var exchange = await _exchangeService.CalculateExchange(amount, from, to);
+            if (exchange == null)
+            {
+                return NotFound();
+            }
 
             return Ok(exchange);
         }
