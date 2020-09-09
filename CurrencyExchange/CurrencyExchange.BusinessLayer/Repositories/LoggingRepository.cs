@@ -1,0 +1,25 @@
+﻿using CurrencyExchange.BusinessLayer.EF;
+using CurrencyExchange.BusinessLayer.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CurrencyExchange.BusinessLayer.Repositories
+{
+    class LoggingRepository : ILoggingRepository
+    {
+        private readonly CurrencyExchangeContext _context;
+
+        public LoggingRepository(CurrencyExchangeContext context)
+        {
+            _context = context;
+        }
+
+        public async Task SaveLogAsync(RequestLog log)
+        {
+            _context.Logs.Add(log);
+            await _context.SaveChangesAsync();
+        }
+    }
+}

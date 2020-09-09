@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CurrencyExchange.BusinessLayer.Services
 {
-    public interface IService
+    public interface IService // Marker interface
     {
     }
 }

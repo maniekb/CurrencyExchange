@@ -11,6 +11,7 @@ namespace CurrencyExchange.BusinessLayer.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<RepositoryModule>();
         }
     }
 }

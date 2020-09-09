@@ -23,6 +23,10 @@ namespace CurrencyExchange
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureLogging((ctx, logging) =>
+                {
+                    logging.AddConfiguration(ctx.Configuration.GetSection("Logging"));
+                 });
     }
 }
