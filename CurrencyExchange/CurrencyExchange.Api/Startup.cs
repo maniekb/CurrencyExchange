@@ -1,5 +1,6 @@
 using Autofac;
 using CurrencyExchange.API.Middleware;
+using CurrencyExchange.API.Swagger;
 using CurrencyExchange.BusinessLayer.EF;
 using CurrencyExchange.BusinessLayer.IoC;
 using Microsoft.AspNetCore.Builder;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 
 namespace CurrencyExchange
@@ -32,6 +34,11 @@ namespace CurrencyExchange
             services.AddControllers();
 
             services.AddDbContext<CurrencyExchangeContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new OpenApiInfo { Title = "Currency Exchange API", Version = "v1" });
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -46,6 +53,12 @@ namespace CurrencyExchange
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+
+            app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+            app.UseSwaggerUI(option => { option.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description); });
 
             app.UseHttpsRedirection();
 

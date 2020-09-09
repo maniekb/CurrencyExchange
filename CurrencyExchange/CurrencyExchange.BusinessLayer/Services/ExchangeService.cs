@@ -15,7 +15,7 @@ namespace CurrencyExchange.BusinessLayer.Services
 
         public async Task<decimal?> CalculateExchange(decimal amount, string from, string to)
         {
-            if (!Enum.IsDefined(typeof(Currencies), from.ToUpper()) || !Enum.IsDefined(typeof(Currencies), from.ToUpper()))
+            if (!Enum.IsDefined(typeof(Currencies), from.ToUpper()) || !Enum.IsDefined(typeof(Currencies), to.ToUpper()))
             {
                 return null;
             }
