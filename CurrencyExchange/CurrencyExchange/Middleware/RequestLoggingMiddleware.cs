@@ -1,12 +1,10 @@
-﻿using CurrencyExchange.BusinessLayer.Services;
+﻿using CurrencyExchange.BusinessLayer.Models;
+using CurrencyExchange.BusinessLayer.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace CurrencyExchange.API.Framework
+namespace CurrencyExchange.API.Middleware
 {
     public class RequestLoggingMiddleware
     {
@@ -26,7 +24,10 @@ namespace CurrencyExchange.API.Framework
             }
             finally
             {
-                await _logger.LogAsync(context.Request?.Path.Value, context.Request?.Method, context.Response?.StatusCode, DateTime.Now);
+                if(context.Response.StatusCode.Equals(200))
+                {
+                    await _logger.LogAsync(RequestType.ApiRequest, context.Request?.Path.Value, context.Request?.Method, context.Response?.StatusCode, DateTime.Now);
+                }         
             }
         }
     }

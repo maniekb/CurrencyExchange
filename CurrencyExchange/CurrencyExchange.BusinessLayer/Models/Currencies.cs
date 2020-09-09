@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CurrencyExchange.BusinessLayer.Models
+﻿namespace CurrencyExchange.BusinessLayer.Models
 {
     public enum Currencies
     {

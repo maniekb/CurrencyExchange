@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CurrencyExchange.BusinessLayer.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace CurrencyExchange.BusinessLayer.Services
 {
     public interface ILoggingService : IService
     {
-        Task LogAsync(string path, string method, int? code, DateTime datetime);
+        Task LogAsync(RequestType type, string path, string method, int? code, DateTime datetime);
     }
 }

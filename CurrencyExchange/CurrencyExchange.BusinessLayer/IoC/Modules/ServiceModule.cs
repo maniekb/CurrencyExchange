@@ -1,9 +1,6 @@
 ﻿using Autofac;
 using CurrencyExchange.BusinessLayer.Services;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace CurrencyExchange.BusinessLayer.IoC.Modules
 {

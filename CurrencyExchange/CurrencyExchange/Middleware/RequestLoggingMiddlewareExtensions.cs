@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CurrencyExchange.API.Framework
+namespace CurrencyExchange.API.Middleware
 {
     public static class RequestLoggingMiddlewareExtensions
     {

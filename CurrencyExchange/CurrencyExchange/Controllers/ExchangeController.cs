@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CurrencyExchange.BusinessLayer.Services;
+﻿using CurrencyExchange.BusinessLayer.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace CurrencyExchange.Controllers
 {

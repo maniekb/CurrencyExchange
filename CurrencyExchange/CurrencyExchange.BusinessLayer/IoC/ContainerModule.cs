@@ -1,8 +1,5 @@
 ﻿using Autofac;
 using CurrencyExchange.BusinessLayer.IoC.Modules;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CurrencyExchange.BusinessLayer.IoC
 {

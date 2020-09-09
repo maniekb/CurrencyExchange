@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CurrencyExchange.BusinessLayer.Models
 {
     public class RequestLog
     {
+        public int Id { get; set; }
+        public RequestType Type { get; set; }
         public string Path { get; set; }
         public string Method { get; set; }
         public int? ResponseStatusCode { get; set; }
@@ -15,8 +15,9 @@ namespace CurrencyExchange.BusinessLayer.Models
         {
         }
 
-        public RequestLog(string path, string method, int? code, DateTime datetime)
+        public RequestLog(RequestType type, string path, string method, int? code, DateTime datetime)
         {
+            Type = type;
             Path = path;
             Method = method;
             ResponseStatusCode = code;

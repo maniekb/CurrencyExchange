@@ -1,8 +1,5 @@
 ﻿using CurrencyExchange.BusinessLayer.EF;
 using CurrencyExchange.BusinessLayer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CurrencyExchange.BusinessLayer.Repositories
@@ -18,7 +15,7 @@ namespace CurrencyExchange.BusinessLayer.Repositories
 
         public async Task SaveLogAsync(RequestLog log)
         {
-            _context.Logs.Add(log);
+            _context.RequestLogs.Add(log);
             await _context.SaveChangesAsync();
         }
     }

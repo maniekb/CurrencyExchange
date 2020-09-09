@@ -1,18 +1,20 @@
-﻿using System;
+﻿using CurrencyExchange.BusinessLayer.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-using CurrencyExchange.BusinessLayer.Models;
 
 namespace CurrencyExchange.BusinessLayer.Services
 {
     public class RatesService : IRatesService
     {
-        private readonly RequestHandler<ExchangeRate> _requestHandler = new RequestHandler<ExchangeRate>(new NBPResponseToRateParser());
+        private readonly RequestHandler<ExchangeRate> _requestHandler;
 
-        public RatesService()
+        public RatesService(ILoggingService loggingService)
         {
+            _requestHandler = new RequestHandler<ExchangeRate>(new NBPResponseToRateParser(), loggingService);
+
         }
 
         public async Task<ExchangeRate> GetRateAsync(string code)
@@ -22,7 +24,9 @@ namespace CurrencyExchange.BusinessLayer.Services
                 return null;
             }
 
-            return await _requestHandler.Handle(string.Format("http://api.nbp.pl/api/exchangerates/rates/a/{0}/?format=json", code));
+            var requestMessage = new HttpRequestMessage(HttpMethod.Get, string.Format("http://api.nbp.pl/api/exchangerates/rates/a/{0}/?format=json", code));
+
+            return await _requestHandler.Handle(requestMessage);
 
         }
 
@@ -32,7 +36,8 @@ namespace CurrencyExchange.BusinessLayer.Services
 
             foreach (var currency in Enum.GetValues(typeof(Currencies)))
             {
-                rates.Add(await _requestHandler.Handle(string.Format("http://api.nbp.pl/api/exchangerates/rates/a/{0}/?format=json", currency)));
+                var requestMessage = new HttpRequestMessage(HttpMethod.Get, string.Format("http://api.nbp.pl/api/exchangerates/rates/a/{0}/?format=json", currency));
+                rates.Add(await _requestHandler.Handle(requestMessage));
             }
 
             return rates;
