@@ -1,8 +1,10 @@
 using Autofac;
+using AutoMapper;
 using CurrencyExchange.API.Middleware;
 using CurrencyExchange.API.Swagger;
 using CurrencyExchange.BusinessLayer.EF;
 using CurrencyExchange.BusinessLayer.IoC;
+using CurrencyExchange.BusinessLayer.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,16 @@ namespace CurrencyExchange
             {
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = "Currency Exchange API", Version = "v1" });
             });
+
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

@@ -6,6 +6,10 @@
         public string Currency { get; set; }
         public decimal Rate { get; set; }
 
+        public ExchangeRate()
+        {
+        }
+
         public ExchangeRate(string code, string currency, decimal rate)
         {
             Code = code;

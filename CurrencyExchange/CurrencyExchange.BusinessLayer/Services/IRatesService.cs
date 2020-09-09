@@ -1,4 +1,4 @@
-﻿using CurrencyExchange.BusinessLayer.Models;
+﻿using CurrencyExchange.BusinessLayer.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,8 +6,8 @@ namespace CurrencyExchange.BusinessLayer.Services
 {
     public interface IRatesService : IService
     {
-        Task<ExchangeRate> GetRateAsync(string currency);
-        Task<List<ExchangeRate>> GetRatesAsync();
+        Task<ExchangeRateDTO> GetRateAsync(string currency);
+        Task<List<ExchangeRateDTO>> GetRatesAsync();
         List<string> GetAvailableCurrencies();
     }
 }

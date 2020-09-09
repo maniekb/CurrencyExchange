@@ -1,4 +1,6 @@
-﻿using CurrencyExchange.BusinessLayer.Models;
+﻿using AutoMapper;
+using CurrencyExchange.BusinessLayer.DTO;
+using CurrencyExchange.BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,15 @@ namespace CurrencyExchange.BusinessLayer.Services
     public class RatesService : IRatesService
     {
         private readonly RequestHandler<ExchangeRate> _requestHandler;
+        private readonly IMapper _mapper;
 
-        public RatesService(ILoggingService loggingService)
+        public RatesService(ILoggingService loggingService, IMapper mapper)
         {
             _requestHandler = new RequestHandler<ExchangeRate>(new NBPResponseToRateParser(), loggingService);
-
+            _mapper = mapper;
         }
 
-        public async Task<ExchangeRate> GetRateAsync(string code)
+        public async Task<ExchangeRateDTO> GetRateAsync(string code)
         {
             if (!Enum.IsDefined(typeof(Currencies), code.ToUpper()))
             {
@@ -26,11 +29,12 @@ namespace CurrencyExchange.BusinessLayer.Services
 
             var requestMessage = new HttpRequestMessage(HttpMethod.Get, string.Format("http://api.nbp.pl/api/exchangerates/rates/a/{0}/?format=json", code));
 
-            return await _requestHandler.Handle(requestMessage);
+            var rate = await _requestHandler.Handle(requestMessage);
+            return _mapper.Map<ExchangeRate, ExchangeRateDTO>(rate);
 
         }
 
-        public async Task<List<ExchangeRate>> GetRatesAsync()
+        public async Task<List<ExchangeRateDTO>> GetRatesAsync()
         {
             var rates = new List<ExchangeRate>();
 
@@ -40,7 +44,7 @@ namespace CurrencyExchange.BusinessLayer.Services
                 rates.Add(await _requestHandler.Handle(requestMessage));
             }
 
-            return rates;
+            return _mapper.Map<List<ExchangeRate>, List<ExchangeRateDTO>>(rates);
         }
 
         public List<string> GetAvailableCurrencies()
